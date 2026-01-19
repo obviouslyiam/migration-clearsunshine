@@ -64,11 +64,9 @@ $table_prefix  = 'wp_';
 
 define('WP_MEMORY_LIMIT', '128M');
 
-// Railway domain configuration
-if (getenv('RAILWAY_PUBLIC_DOMAIN')) {
-    define('WP_HOME', 'https://' . getenv('RAILWAY_PUBLIC_DOMAIN'));
-    define('WP_SITEURL', 'https://' . getenv('RAILWAY_PUBLIC_DOMAIN'));
-}
+// Railway domain configuration - hardcoded for deployment
+define('WP_HOME', 'https://clearsunshine-production.up.railway.app');
+define('WP_SITEURL', 'https://clearsunshine-production.up.railway.app');
 
 /**
  * For developers: WordPress debugging mode.
