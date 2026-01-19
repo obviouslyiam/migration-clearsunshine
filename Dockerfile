@@ -26,9 +26,9 @@ RUN chown -R www-data:www-data /var/www/html \
     && find /var/www/html -type d -exec chmod 755 {} \; \
     && find /var/www/html -type f -exec chmod 644 {} \;
 
-# Disable conflicting MPM modules and enable only mpm_prefork
-RUN a2dismod mpm_event mpm_worker || true \
-    && a2enmod mpm_prefork
+# Fix MPM conflict by removing duplicate module loads
+RUN rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.* \
+    && ls -la /etc/apache2/mods-enabled/mpm_* || true
 
 # Enable Apache modules
 RUN a2enmod rewrite headers expires
