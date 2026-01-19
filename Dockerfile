@@ -29,13 +29,9 @@ RUN chown -R www-data:www-data /var/www/html \
 # Enable Apache modules
 RUN a2enmod rewrite headers expires
 
-# Create startup script to handle Railway's PORT variable
-RUN echo '#!/bin/bash\n\
-PORT=${PORT:-80}\n\
-sed -i "s/Listen 80/Listen ${PORT}/g" /etc/apache2/ports.conf\n\
-sed -i "s/:80/:${PORT}/g" /etc/apache2/sites-available/000-default.conf\n\
-apache2-foreground\n\
-' > /start.sh && chmod +x /start.sh
+# Copy startup script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
 # Expose port
 EXPOSE 80
