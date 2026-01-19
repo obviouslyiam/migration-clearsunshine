@@ -26,6 +26,10 @@ RUN chown -R www-data:www-data /var/www/html \
     && find /var/www/html -type d -exec chmod 755 {} \; \
     && find /var/www/html -type f -exec chmod 644 {} \;
 
+# Disable conflicting MPM modules and enable only mpm_prefork
+RUN a2dismod mpm_event mpm_worker || true \
+    && a2enmod mpm_prefork
+
 # Enable Apache modules
 RUN a2enmod rewrite headers expires
 
